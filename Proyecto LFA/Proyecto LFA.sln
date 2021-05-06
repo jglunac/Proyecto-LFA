@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proyecto LFA", "Proyecto LFA\Proyecto LFA.csproj", "{E0D87172-B692-42A2-AE2F-B458F48DBBB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proyecto LFA", "Proyecto LFA\Proyecto LFA.csproj", "{E0D87172-B692-42A2-AE2F-B458F48DBBB7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{15F499E5-0C35-4C2D-9528-71E90E1717EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
