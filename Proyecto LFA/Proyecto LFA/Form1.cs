@@ -100,11 +100,11 @@ namespace Proyecto_LFA
                     }
                 }
                 List<string> Temp = MT.ToList();
-                foreach (var item in Temp)
+                for(int i = 0; i<MT.Length; i++)
                 {
-                    if (item=="")
+                    if (MT[i]=="")
                     {
-                        Temp.Remove(item);
+                        Temp.Remove(MT[i]);
                     }
                 }
 
@@ -150,11 +150,11 @@ namespace Proyecto_LFA
 
                
                 MessageBox.Show("Máquina generada correctamente.");
-            //}
-            //catch (Exception)
-            //{
-            //    MessageBox.Show("¡No es una máquina válida!");
-            //}
+            //    }
+            //    catch (Exception)
+            //    {
+            //        MessageBox.Show("¡No es una máquina válida!");
+            //    }
         }
 
         private void SelectAuto_Click(object sender, EventArgs e)
@@ -240,7 +240,7 @@ namespace Proyecto_LFA
                         data.ToWrite.ToString() + " ," +
                         data.Movement.ToString();
                     lblCurrentState.Text = data.FromState.ToString();
-                        
+                    inLoop = true;
                     break;
                 case 4:
                     MessageBox.Show(data.Msg);
@@ -271,7 +271,13 @@ namespace Proyecto_LFA
             PanelA.Visible = false;
             PanelP.Visible = true;
             PanelP.Enabled = true;
-            
+            foreach (var item in MTStates)
+            {
+                if (item.Name == data.sTo)
+                {
+                    CurrentState = item;
+                }
+            }
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -288,6 +294,18 @@ namespace Proyecto_LFA
 
             switch (data.ErrCode)
             {
+                case 0:
+                    string ans2 = new string(chararray.ToArray());
+                    lblCintaP.Text = ans2.Remove(ans2.Length - 1);
+                    lblCintaA.Text = ans2.Remove(ans2.Length - 1);
+                    lblTransition.Text =
+                        data.FromState.ToString() + " ," +
+                        data.ToRead.ToString() + " ," +
+                        data.sTo.ToString() + " ," +
+                        data.ToWrite.ToString() + " ," +
+                        data.Movement.ToString();
+                    lblCurrentState.Text = data.FromState.ToString();
+                    break;
                 case 1:
                     MessageBox.Show(data.Msg + " En: "
                         + " Posición del cabezal: " + HeaderPos.ToString()
@@ -382,6 +400,10 @@ namespace Proyecto_LFA
                     btnStartP.Enabled = false;
                     PanelP.Enabled = true;
                     PanelP.Visible = true;
+                    
+                    HeaderPos = 0;
+                    chararray = txtWord.Text.ToCharArray().ToList();
+                    data = StateInitial.CheckTransitions(chararray, ref HeaderPos,inLoop, true);
                     foreach (STATE item in MTStates)
                     {
                         if (item.Name == data.sTo)
@@ -389,11 +411,20 @@ namespace Proyecto_LFA
                             CurrentState = item;
                         }
                     }
-                    HeaderPos = 0;
-                    chararray = txtWord.Text.ToCharArray().ToList();
-                    data = StateInitial.CheckTransitions(chararray, ref HeaderPos,inLoop, true);
                     switch (data.ErrCode)
                     {
+                        case 0:
+                            string ans2 = new string(chararray.ToArray());
+                            lblCintaP.Text = ans2.Remove(ans2.Length - 1);
+                            lblCintaA.Text = ans2.Remove(ans2.Length - 1);
+                            lblTransition.Text =
+                                data.FromState.ToString() + " ," +
+                                data.ToRead.ToString() + " ," +
+                                data.sTo.ToString() + " ," +
+                                data.ToWrite.ToString() + " ," +
+                                data.Movement.ToString();
+                            lblCurrentState.Text = data.FromState.ToString();
+                            break;
                         case 1:
                             MessageBox.Show(data.Msg + " En: "
                                 + " Posición del cabezal: " + HeaderPos.ToString()
@@ -404,7 +435,6 @@ namespace Proyecto_LFA
                             break;
                         case 2:
                             MessageBox.Show(data.Msg);
-                            string result = new string(chararray.ToArray());
                             string result2 = new string(chararray.ToArray());
                             lblCintaP.Text = result2.Remove(result2.Length - 1);
                             lblCintaA.Text = result2.Remove(result2.Length - 1);
