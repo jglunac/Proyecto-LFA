@@ -159,6 +159,7 @@ namespace Proyecto_LFA
 
         private void SelectAuto_Click(object sender, EventArgs e)
         {
+            lblCintaA.Text = "";
             bool OkAlphabet = true;
             if (MTStates.Count == 0)
             {
@@ -195,8 +196,10 @@ namespace Proyecto_LFA
                     btnAddMT.Enabled = false;
                     SelectAuto.Enabled = false;
                     btnStartP.Enabled = false;
-                    PanelA.Enabled = true;
                     PanelA.Visible = true;
+                    PanelA.Enabled = true;
+                    PanelP.Enabled = false;
+                    PanelP.Visible = false;
                 }
                 else
                 {
@@ -207,6 +210,7 @@ namespace Proyecto_LFA
 
         private void btnStartA_Click(object sender, EventArgs e)
         {
+
             HeaderPos = 0;
             chararray = txtWord.Text.ToCharArray().ToList();
             data = StateInitial.CheckTransitions(chararray, ref HeaderPos, false, false);
@@ -223,14 +227,18 @@ namespace Proyecto_LFA
                 case 2:
                     MessageBox.Show(data.Msg);
                     string result = new string(chararray.ToArray());
+                    lblHeaderPos.Text = HeaderPos.ToString();
                     lblCintaA.Text = result;
+                    btnSwitch.Enabled = false;
+                    btnStartP.Enabled = true;
+                    SelectAuto.Enabled = true;
                     break;
                 case 3:
                     MessageBox.Show(data.Msg);
                     lblHeaderPos.Text = HeaderPos.ToString();
                     string result2 = new string(chararray.ToArray());
-                    lblCintaP.Text = result2.Remove(result2.Length - 1);
-                    lblCintaA.Text = result2.Remove(result2.Length - 1);
+                    lblCintaP.Text = result2;
+                    lblCintaA.Text = result2;
                     btnSwitch.Visible = true;
                     btnSwitch.Enabled = true;
                     lblTransition.Text =
@@ -239,7 +247,7 @@ namespace Proyecto_LFA
                         data.sTo.ToString() + " ," +
                         data.ToWrite.ToString() + " ," +
                         data.Movement.ToString();
-                    lblCurrentState.Text = data.FromState.ToString();
+                    lblCurrentState.Text = data.sTo.ToString();
                     inLoop = true;
                     break;
                 case 4:
@@ -271,6 +279,7 @@ namespace Proyecto_LFA
             PanelA.Visible = false;
             PanelP.Visible = true;
             PanelP.Enabled = true;
+            btnStop.Visible = true;
             foreach (var item in MTStates)
             {
                 if (item.Name == data.sTo)
@@ -296,15 +305,16 @@ namespace Proyecto_LFA
             {
                 case 0:
                     string ans2 = new string(chararray.ToArray());
-                    lblCintaP.Text = ans2.Remove(ans2.Length - 1);
-                    lblCintaA.Text = ans2.Remove(ans2.Length - 1);
+                    lblCintaP.Text = ans2;
+                    lblCintaA.Text = ans2;
                     lblTransition.Text =
                         data.FromState.ToString() + " ," +
                         data.ToRead.ToString() + " ," +
                         data.sTo.ToString() + " ," +
                         data.ToWrite.ToString() + " ," +
                         data.Movement.ToString();
-                    lblCurrentState.Text = data.FromState.ToString();
+                    lblCurrentState.Text = data.sTo.ToString();
+                    lblHeaderPos.Text = HeaderPos.ToString();
                     break;
                 case 1:
                     MessageBox.Show(data.Msg + " En: "
@@ -315,16 +325,25 @@ namespace Proyecto_LFA
                         );
                     break;
                 case 2:
-                    MessageBox.Show(data.Msg);
                     string result = new string(chararray.ToArray());
                     lblCintaA.Text = result;
+                    lblCintaP.Text = result;
+                    lblTransition.Text =
+                                data.FromState.ToString() + " ," +
+                                data.ToRead.ToString() + " ," +
+                                data.sTo.ToString() + " ," +
+                                data.ToWrite.ToString() + " ," +
+                                data.Movement.ToString();
+                    btnStartP.Enabled = true;
+                    SelectAuto.Enabled = true;
+                    MessageBox.Show(data.Msg);
                     break;
                 case 3:
                     MessageBox.Show(data.Msg);
                     lblHeaderPos.Text = HeaderPos.ToString();
                     string result2 = new string(chararray.ToArray());
-                    lblCintaP.Text = result2.Remove(result2.Length - 1);
-                    lblCintaA.Text = result2.Remove(result2.Length - 1);
+                    lblCintaP.Text = result2;
+                    lblCintaA.Text = result2;
                     btnSwitch.Visible = true;
                     btnSwitch.Enabled = true;
                     lblTransition.Text =
@@ -334,6 +353,10 @@ namespace Proyecto_LFA
                         data.ToWrite.ToString() + " ," +
                         data.Movement.ToString();
                     lblCurrentState.Text = data.FromState.ToString();
+                    lblHeaderPos.Text = HeaderPos.ToString();
+                    inLoop = true;
+                    btnStop.Visible = true;
+                  
 
                     break;
                 case 4:
@@ -357,10 +380,16 @@ namespace Proyecto_LFA
             btnStartP.Enabled = true;
             PanelA.Visible = false;
             PanelA.Enabled = false;
+            PanelP.Enabled = false;
+            PanelP.Visible = false;
         }
 
         private void btnStartP_Click(object sender, EventArgs e)
         {
+            HeaderPos = 0;
+            btnStop.Visible = false;
+            btnAuto.Enabled = true;
+            btnAuto.Visible = true;
             inLoop = false;
             bool OkAlphabet = true;
             if (MTStates.Count == 0)
@@ -395,85 +424,38 @@ namespace Proyecto_LFA
                 }
                 if (OkAlphabet == true)
                 {
+                    CurrentState = StateInitial;
                     btnAddMT.Enabled = false;
                     SelectAuto.Enabled = false;
                     btnStartP.Enabled = false;
+                    PanelA.Enabled = false;
+                    PanelA.Visible = false;
                     PanelP.Enabled = true;
                     PanelP.Visible = true;
-                    
-                    HeaderPos = 0;
                     chararray = txtWord.Text.ToCharArray().ToList();
-                    data = StateInitial.CheckTransitions(chararray, ref HeaderPos,inLoop, true);
-                    foreach (STATE item in MTStates)
-                    {
-                        if (item.Name == data.sTo)
-                        {
-                            CurrentState = item;
-                        }
-                    }
-                    switch (data.ErrCode)
-                    {
-                        case 0:
-                            string ans2 = new string(chararray.ToArray());
-                            lblCintaP.Text = ans2.Remove(ans2.Length - 1);
-                            lblCintaA.Text = ans2.Remove(ans2.Length - 1);
-                            lblTransition.Text =
-                                data.FromState.ToString() + " ," +
-                                data.ToRead.ToString() + " ," +
-                                data.sTo.ToString() + " ," +
-                                data.ToWrite.ToString() + " ," +
-                                data.Movement.ToString();
-                            lblCurrentState.Text = data.FromState.ToString();
-                            break;
-                        case 1:
-                            MessageBox.Show(data.Msg + " En: "
-                                + " Posición del cabezal: " + HeaderPos.ToString()
-                                + " Caracter a escribir: " + data.ToWrite.ToString()
-                                + " Caracter a leer: " + data.ToRead.ToString()
-                                + " Movimiento a realizar: " + data.Movement.ToString()
-                                );
-                            break;
-                        case 2:
-                            MessageBox.Show(data.Msg);
-                            string result2 = new string(chararray.ToArray());
-                            lblCintaP.Text = result2.Remove(result2.Length - 1);
-                            lblCintaA.Text = result2.Remove(result2.Length - 1);
-                            lblTransition.Text =
-                                data.FromState.ToString() + " ," +
-                                data.ToRead.ToString() + " ," +
-                                data.sTo.ToString() + " ," +
-                                data.ToWrite.ToString() + " ," +
-                                data.Movement.ToString();
-                            lblCurrentState.Text = data.FromState.ToString();
-                            break;
-                        case 3:
-                            inLoop = true;
-                            MessageBox.Show(data.Msg);
-                            lblHeaderPos.Text = HeaderPos.ToString();
-                            string result3 = new string(chararray.ToArray());
-                            lblCintaP.Text = result3.Remove(result3.Length - 1);
-                            lblCintaA.Text = result3.Remove(result3.Length - 1);
-                            lblTransition.Text =
-                                data.FromState.ToString() + " ," +
-                                data.ToRead.ToString() + " ," +
-                                data.sTo.ToString() + " ," +
-                                data.ToWrite.ToString() + " ," +
-                                data.Movement.ToString();
-                            lblCurrentState.Text = data.FromState.ToString();
-
-                            break;
-                        case 4:
-                            MessageBox.Show(data.Msg);
-                            break;
-                    }
-
-
+                    string ans2 = new string(chararray.ToArray());
+                    lblCintaP.Text = txtWord.Text;
+                    lblTransition.Text = "Ninguna Transición Operada";
+                    lblCurrentState.Text = StateInitial.Name.ToString();
+                    lblHeaderPos.Text = HeaderPos.ToString();
                 }
                 else
                 {
                     MessageBox.Show("Revise su alfabeto.");
                 }
             }
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            lblCintaP.Text = "";
+            lblCintaA.Text = "";
+            lblTransition.Text = "";
+            lblCurrentState.Text = "";
+            btnStop.Visible = false;
+            lblHeaderPos.Text = "";
+            btnStartP.Enabled = true;
+            SelectAuto.Enabled = true;
         }
     }
 }

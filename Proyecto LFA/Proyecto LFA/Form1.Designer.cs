@@ -37,6 +37,11 @@ namespace Proyecto_LFA
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.PanelA = new System.Windows.Forms.Panel();
+            this.btnStartA = new System.Windows.Forms.Button();
+            this.lblCintaA = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnSwitch = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
             this.PanelP = new System.Windows.Forms.Panel();
             this.lblTransition = new System.Windows.Forms.Label();
             this.lblCurrentState = new System.Windows.Forms.Label();
@@ -49,12 +54,8 @@ namespace Proyecto_LFA
             this.label6 = new System.Windows.Forms.Label();
             this.btnAuto = new System.Windows.Forms.Button();
             this.btnRestart = new System.Windows.Forms.Button();
-            this.btnStartA = new System.Windows.Forms.Button();
-            this.lblCintaA = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.btnSwitch = new System.Windows.Forms.Button();
-            this.btnReset = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnStop = new System.Windows.Forms.Button();
             this.StartupPanel.SuspendLayout();
             this.PanelA.SuspendLayout();
             this.PanelP.SuspendLayout();
@@ -142,8 +143,57 @@ namespace Proyecto_LFA
             this.PanelA.TabIndex = 1;
             this.PanelA.Visible = false;
             // 
+            // btnStartA
+            // 
+            this.btnStartA.Location = new System.Drawing.Point(21, 130);
+            this.btnStartA.Name = "btnStartA";
+            this.btnStartA.Size = new System.Drawing.Size(94, 29);
+            this.btnStartA.TabIndex = 8;
+            this.btnStartA.Text = "Analizar";
+            this.btnStartA.UseVisualStyleBackColor = true;
+            this.btnStartA.Click += new System.EventHandler(this.btnStartA_Click);
+            // 
+            // lblCintaA
+            // 
+            this.lblCintaA.AutoSize = true;
+            this.lblCintaA.Location = new System.Drawing.Point(82, 29);
+            this.lblCintaA.Name = "lblCintaA";
+            this.lblCintaA.Size = new System.Drawing.Size(0, 20);
+            this.lblCintaA.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(21, 29);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(46, 20);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Cinta:";
+            // 
+            // btnSwitch
+            // 
+            this.btnSwitch.Location = new System.Drawing.Point(221, 130);
+            this.btnSwitch.Name = "btnSwitch";
+            this.btnSwitch.Size = new System.Drawing.Size(176, 29);
+            this.btnSwitch.TabIndex = 1;
+            this.btnSwitch.Text = "Intentar Paso-A-Paso";
+            this.btnSwitch.UseVisualStyleBackColor = true;
+            this.btnSwitch.Visible = false;
+            this.btnSwitch.Click += new System.EventHandler(this.btnSwitch_Click);
+            // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(121, 130);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(94, 29);
+            this.btnReset.TabIndex = 0;
+            this.btnReset.Text = "Reiniciar";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
             // PanelP
             // 
+            this.PanelP.Controls.Add(this.btnStop);
             this.PanelP.Controls.Add(this.lblTransition);
             this.PanelP.Controls.Add(this.lblCurrentState);
             this.PanelP.Controls.Add(this.lblHeaderPos);
@@ -242,12 +292,14 @@ namespace Proyecto_LFA
             // 
             // btnAuto
             // 
+            this.btnAuto.Enabled = false;
             this.btnAuto.Location = new System.Drawing.Point(221, 130);
             this.btnAuto.Name = "btnAuto";
             this.btnAuto.Size = new System.Drawing.Size(196, 29);
             this.btnAuto.TabIndex = 1;
             this.btnAuto.Text = "Continuar en Automático";
             this.btnAuto.UseVisualStyleBackColor = true;
+            this.btnAuto.Visible = false;
             // 
             // btnRestart
             // 
@@ -259,54 +311,6 @@ namespace Proyecto_LFA
             this.btnRestart.UseVisualStyleBackColor = true;
             this.btnRestart.Click += new System.EventHandler(this.btnRestart_Click);
             // 
-            // btnStartA
-            // 
-            this.btnStartA.Location = new System.Drawing.Point(21, 130);
-            this.btnStartA.Name = "btnStartA";
-            this.btnStartA.Size = new System.Drawing.Size(94, 29);
-            this.btnStartA.TabIndex = 8;
-            this.btnStartA.Text = "Analizar";
-            this.btnStartA.UseVisualStyleBackColor = true;
-            this.btnStartA.Click += new System.EventHandler(this.btnStartA_Click);
-            // 
-            // lblCintaA
-            // 
-            this.lblCintaA.AutoSize = true;
-            this.lblCintaA.Location = new System.Drawing.Point(82, 29);
-            this.lblCintaA.Name = "lblCintaA";
-            this.lblCintaA.Size = new System.Drawing.Size(0, 20);
-            this.lblCintaA.TabIndex = 7;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 29);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 20);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Cinta:";
-            // 
-            // btnSwitch
-            // 
-            this.btnSwitch.Location = new System.Drawing.Point(221, 130);
-            this.btnSwitch.Name = "btnSwitch";
-            this.btnSwitch.Size = new System.Drawing.Size(176, 29);
-            this.btnSwitch.TabIndex = 1;
-            this.btnSwitch.Text = "Intentar Paso-A-Paso";
-            this.btnSwitch.UseVisualStyleBackColor = true;
-            this.btnSwitch.Visible = false;
-            this.btnSwitch.Click += new System.EventHandler(this.btnSwitch_Click);
-            // 
-            // btnReset
-            // 
-            this.btnReset.Location = new System.Drawing.Point(121, 130);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(94, 29);
-            this.btnReset.TabIndex = 0;
-            this.btnReset.Text = "Reiniciar";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -316,6 +320,17 @@ namespace Proyecto_LFA
             this.label4.Size = new System.Drawing.Size(279, 33);
             this.label4.TabIndex = 1;
             this.label4.Text = "Analizador de Turing";
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(21, 165);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(94, 29);
+            this.btnStop.TabIndex = 15;
+            this.btnStop.Text = "Detener";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Visible = false;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // Form1
             // 
@@ -359,7 +374,6 @@ namespace Proyecto_LFA
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Label lblCintaP;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button btnAuto;
         private System.Windows.Forms.Button btnRestart;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
@@ -367,6 +381,8 @@ namespace Proyecto_LFA
         private System.Windows.Forms.Label lblCurrentState;
         private System.Windows.Forms.Label lblHeaderPos;
         private System.Windows.Forms.Label lblTransition;
+        private System.Windows.Forms.Button btnAuto;
+        private System.Windows.Forms.Button btnStop;
     }
 }
 
