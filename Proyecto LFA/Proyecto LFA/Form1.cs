@@ -151,22 +151,24 @@ namespace Proyecto_LFA
             }
             else
             {
-                foreach (char item in Alphabet)
+                foreach (char item2 in txtWord.Text)
                 {
                     bool exists = false;
-                    
-                    foreach (char item2 in txtWord.Text)
+
+                    if (item2 != '_')
                     {
-                        
-                        if (item == item2)
+                        foreach (char item in Alphabet)
                         {
-                            exists = true;
+                            if (item == item2)
+                            {
+                                exists = true;
+                            }
                         }
-                    }
-                    if (exists != true)
-                    {
-                        OkAlphabet = false;
-                        break;
+                        if (exists != true)
+                        {
+                            OkAlphabet = false;
+                            break;
+                        }
                     }
                 }
                 if (OkAlphabet==true)
