@@ -17,6 +17,19 @@ namespace Proyecto_LFA
 				if (item.ToRead == ReadChar)
 				{
 					currentTape[position] = item.ToWrite;
+					
+					if (item.ToRead == item.ToWrite && item.sTo.Name == Name && !inLoop && (item.Direction=='0' || (item.Direction=='d' &&item.ToRead=='_'&& position != 0)))
+					{
+						actualData data = new actualData();
+						data.FromState = Name;
+						data.ErrCode = 3;
+						data.Movement = item.Direction;
+						data.sTo = item.sTo.Name;
+						data.ToRead = item.ToRead;
+						data.ToWrite = item.ToWrite;
+						data.Msg = "Se ha detectado un loop ¿Desea continuar?";
+						return data;
+					}
 					switch (item.Direction)
 					{
 						//en caso Direction sea '0' position seguirá siendo la misma y así se enviará al próximo estado
@@ -49,18 +62,6 @@ namespace Proyecto_LFA
 							data.ToWrite = item.ToWrite;
 							data.Msg = "Proceso realizado correctamente";
 							return data;
-					}
-					if (item.ToRead == item.ToWrite && item.sTo.Name == Name && !inLoop && (item.Direction=='0' || item.ToRead=='_'))
-					{
-						actualData data = new actualData();
-						data.FromState = Name;
-						data.ErrCode = 3;
-						data.Movement = item.Direction;
-						data.sTo = item.sTo.Name;
-						data.ToRead = item.ToRead;
-						data.ToWrite = item.ToWrite;
-						data.Msg = "Se ha detectado un loop ¿Desea continuar?";
-						return data;
 					}
 					if (!StepByStep)
 					{
