@@ -6,6 +6,7 @@ namespace Proyecto_LFA
 {
     public class actualData
     {
+        public int FromState;
         public int sTo;
         public char ToRead;
         public char ToWrite;

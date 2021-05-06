@@ -19,6 +19,8 @@ namespace Proyecto_LFA
         static List<char> Alphabet = new List<char>();
         List<char> chars = new List<char>();
         int HeaderPos = 0;
+        List<char> chararray = new List<char>();
+        actualData data = new actualData();
 
 
         public Form1()
@@ -28,6 +30,12 @@ namespace Proyecto_LFA
 
         private void btnAddMT_Click(object sender, EventArgs e)
         {
+            MTStates.Clear();
+            Alphabet.Clear();
+            chararray.Clear();
+            HeaderPos = 0;
+            actualData data = new actualData();
+            StateInitial = new STATE();
             var RawMT = string.Empty;
             var filePath = string.Empty;
             using (OpenFileDialog openFile = new OpenFileDialog())
@@ -145,86 +153,104 @@ namespace Proyecto_LFA
 
         private void SelectAuto_Click(object sender, EventArgs e)
         {
-            PanelA.Enabled = true;
-            PanelA.Visible = true;
+            bool OkAlphabet = true;
+            if (MTStates.Count == 0)
+            {
+                MessageBox.Show("¡Primero ingresa una máquina válida!");
+            }
+            else
+            {
+                foreach (char item in Alphabet)
+                {
+                    bool exists = false;
+                    
+                    foreach (char item2 in txtWord.Text)
+                    {
+                        
+                        if (item == item2)
+                        {
+                            exists = true;
+                        }
+                    }
+                    if (exists != true)
+                    {
+                        OkAlphabet = false;
+                        break;
+                    }
+                }
+                if (OkAlphabet==true)
+                {
+                    PanelA.Enabled = true;
+                    PanelA.Visible = true;
+                }
+                else
+                {
+                    MessageBox.Show("Revise su alfabeto.");
+                }
+            }
         }
 
         private void btnStartA_Click(object sender, EventArgs e)
         {
-
+            chararray = txtWord.Text.ToCharArray().ToList();
+            data = StateInitial.CheckTransitions(chararray, ref HeaderPos, false, false);
+            switch (data.ErrCode)
+            {
+                case 1:
+                    MessageBox.Show(data.Msg + " En: "
+                        + " Posición del cabezal: " + HeaderPos.ToString()
+                        + " Caracter a escribir: " + data.ToWrite.ToString()
+                        + " Caracter a leer: " + data.ToRead.ToString()
+                        + " Movimiento a realizar: " + data.Movement.ToString()
+                        );
+                    break;
+                case 2:
+                    MessageBox.Show(data.Msg);
+                    string result = new string(chararray.ToArray());
+                    lblCintaA.Text = result;
+                    break;
+                case 3:
+                    MessageBox.Show(data.Msg);
+                    lblHeaderPos.Text = HeaderPos.ToString();
+                    string result2 = new string(chararray.ToArray());
+                    lblCintaP.Text = result2.Remove(result2.Length - 1);
+                    lblCintaA.Text = result2.Remove(result2.Length - 1);
+                    btnSwitch.Visible = true;
+                    btnSwitch.Enabled = true;
+                    lblTransition.Text =
+                        data.FromState.ToString() + " ," +
+                        data.ToRead.ToString() + " ," +
+                        data.sTo.ToString() + " ," +
+                        data.ToWrite.ToString() + " ," +
+                        data.Movement.ToString();
+                    lblCurrentState.Text = data.FromState.ToString();
+                        
+                    break;
+                case 4:
+                    MessageBox.Show(data.Msg);
+                    break;
+            }
         }
 
-
-        private actualData CheckTransitions(List<char> currentTape, ref int position, bool inLoop, bool StepByStep, STATE ActualState)
+        private void btnReset_Click(object sender, EventArgs e)
         {
-            char ReadChar = currentTape[position];
-            foreach (var item in ActualState.Transitions)
-            {
-                if (item.ToRead == ReadChar)
-                {
-                    currentTape[position] = item.ToWrite;
-                    switch (item.Direction)
-                    {
-                        //en caso Direction sea '0' position seguirá siendo la misma y así se enviará al próximo estado
-                        case 'i':
-                            if (position > 0) position--;
-                            else
-                            {
-                                actualData data3 = new actualData();
-                                data3.ErrCode = 1;
-                                data3.Movement = item.Direction;
-                                data3.sTo = item.sTo.Name;
-                                data3.ToRead = item.ToRead;
-                                data3.ToWrite = item.ToWrite;
-                                data3.Msg = "Transición requiere movimiento a la izquierda en posición inicial";
-                                return data3;
-                            }
-                            break;
-                        case 'd':
-                            if (position >= currentTape.Count - 1) currentTape.Add('_');
-                            position++;
-                            break;
-                        case 'p':
-                            actualData data = new actualData();
-                            data.ErrCode = 2;
-                            data.Movement = item.Direction;
-                            data.sTo = item.sTo.Name;
-                            data.ToRead = item.ToRead;
-                            data.ToWrite = item.ToWrite;
-                            data.Msg = "Proceso realizado correctamente";
-                            return data;
-                    }
-                    if (item.ToRead == item.ToWrite && item.sTo.Name == ActualState.Name && !inLoop)
-                    {
-                        actualData data = new actualData();
-                        data.ErrCode = 3;
-                        data.Movement = item.Direction;
-                        data.sTo = item.sTo.Name;
-                        data.ToRead = item.ToRead;
-                        data.ToWrite = item.ToWrite;
-                        data.Msg = "Se ha detectado un loop ¿Desea continuar?";
-                        return data;
-                    }
-                    if (!StepByStep)
-                    {
-                        return item.sTo.CheckTransitions(currentTape, ref position, inLoop, StepByStep);
-                    }
-                    else
-                    {
-                        actualData data = new actualData();
-                        data.ErrCode = 0;
-                        data.Movement = item.Direction;
-                        data.sTo = item.sTo.Name;
-                        data.ToRead = item.ToRead;
-                        data.ToWrite = item.ToWrite;
-                        return data;
-                    }
-                }
-            }
-            actualData data1 = new actualData();
-            data1.ErrCode = 4;
-            data1.Msg = "No se ha encontrado ninguna transición con el caracter en la posición actual";
-            return data1;
+            MTStates.Clear();
+            Alphabet.Clear();
+            chararray.Clear();
+            HeaderPos = 0;
+            actualData data = new actualData();
+            StateInitial = new STATE();
+            lblCintaA.Text = "";
+            PanelA.Visible = false;
+            PanelA.Enabled = false;
+        }
+
+        private void btnSwitch_Click(object sender, EventArgs e)
+        {
+            PanelP.Visible = true;
+            PanelP.Enabled = true;
+            PanelA.Enabled = false;
+            PanelA.Visible = false;
         }
     }
 }
