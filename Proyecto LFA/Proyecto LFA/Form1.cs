@@ -30,6 +30,10 @@ namespace Proyecto_LFA
 
         private void btnAddMT_Click(object sender, EventArgs e)
         {
+            PanelA.Visible = false;
+            PanelP.Visible = false;
+            PanelP.Enabled = false;
+            PanelA.Enabled = false;
             MTStates.Clear();
             Alphabet.Clear();
             chararray.Clear();
@@ -149,6 +153,10 @@ namespace Proyecto_LFA
             {
                 MessageBox.Show("¡Primero ingresa una máquina válida!");
             }
+            else if (txtWord.Text == "")
+            {
+                MessageBox.Show("¡Primero ingresa una palabra!");
+            }
             else
             {
                 foreach (char item2 in txtWord.Text)
@@ -173,6 +181,9 @@ namespace Proyecto_LFA
                 }
                 if (OkAlphabet==true)
                 {
+                    btnAddMT.Enabled = false;
+                    SelectAuto.Enabled = false;
+                    btnStartP.Enabled = false;
                     PanelA.Enabled = true;
                     PanelA.Visible = true;
                 }
@@ -185,6 +196,7 @@ namespace Proyecto_LFA
 
         private void btnStartA_Click(object sender, EventArgs e)
         {
+            HeaderPos = 0;
             chararray = txtWord.Text.ToCharArray().ToList();
             data = StateInitial.CheckTransitions(chararray, ref HeaderPos, false, false);
             switch (data.ErrCode)
@@ -227,6 +239,7 @@ namespace Proyecto_LFA
 
         private void btnReset_Click(object sender, EventArgs e)
         {
+            txtWord.Clear();
             MTStates.Clear();
             Alphabet.Clear();
             chararray.Clear();
@@ -234,16 +247,90 @@ namespace Proyecto_LFA
             actualData data = new actualData();
             StateInitial = new STATE();
             lblCintaA.Text = "";
+            btnAddMT.Enabled = true;
+            SelectAuto.Enabled = true;
+            btnStartP.Enabled = true;
             PanelA.Visible = false;
             PanelA.Enabled = false;
         }
 
         private void btnSwitch_Click(object sender, EventArgs e)
         {
-            PanelP.Visible = true;
-            PanelP.Enabled = true;
             PanelA.Enabled = false;
             PanelA.Visible = false;
+            PanelP.Visible = true;
+            PanelP.Enabled = true;
+            
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRestart_Click(object sender, EventArgs e)
+        {
+            txtWord.Clear();
+            MTStates.Clear();
+            Alphabet.Clear();
+            chararray.Clear();
+            HeaderPos = 0;
+            actualData data = new actualData();
+            StateInitial = new STATE();
+            lblCintaA.Text = "";
+            btnAddMT.Enabled = true;
+            SelectAuto.Enabled = true;
+            btnStartP.Enabled = true;
+            PanelA.Visible = false;
+            PanelA.Enabled = false;
+        }
+
+        private void btnStartP_Click(object sender, EventArgs e)
+        {
+            bool OkAlphabet = true;
+            if (MTStates.Count == 0)
+            {
+                MessageBox.Show("¡Primero ingresa una máquina válida!");
+            }
+            else if (txtWord.Text == "")
+            {
+                MessageBox.Show("¡Primero ingresa una palabra!");
+            }
+            else
+            {
+                foreach (char item2 in txtWord.Text)
+                {
+                    bool exists = false;
+
+                    if (item2 != '_')
+                    {
+                        foreach (char item in Alphabet)
+                        {
+                            if (item == item2)
+                            {
+                                exists = true;
+                            }
+                        }
+                        if (exists != true)
+                        {
+                            OkAlphabet = false;
+                            break;
+                        }
+                    }
+                }
+                if (OkAlphabet == true)
+                {
+                    btnAddMT.Enabled = false;
+                    SelectAuto.Enabled = false;
+                    btnStartP.Enabled = false;
+                    PanelP.Enabled = true;
+                    PanelP.Visible = true;
+                }
+                else
+                {
+                    MessageBox.Show("Revise su alfabeto.");
+                }
+            }
         }
     }
 }
