@@ -133,16 +133,7 @@ namespace Proyecto_LFA
 
                 }
 
-                //DETECCIÓN DE ESTADO INICIAL
-                //Encuentra el estado inicial
-                foreach (var PState in MTStates)
-                {
-                    if (PState.Name == Convert.ToInt32(MT[0]))
-                    {
-                        StateInitial = PState;
-                        break;
-                    }
-                }
+               
                 MessageBox.Show("Máquina generada correctamente.");
             }
             catch (Exception)
