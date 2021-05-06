@@ -43,6 +43,7 @@ namespace Proyecto_LFA
             this.btnSwitch = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.PanelP = new System.Windows.Forms.Panel();
+            this.btnStop = new System.Windows.Forms.Button();
             this.lblTransition = new System.Windows.Forms.Label();
             this.lblCurrentState = new System.Windows.Forms.Label();
             this.lblHeaderPos = new System.Windows.Forms.Label();
@@ -55,7 +56,6 @@ namespace Proyecto_LFA
             this.btnAuto = new System.Windows.Forms.Button();
             this.btnRestart = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.btnStop = new System.Windows.Forms.Button();
             this.StartupPanel.SuspendLayout();
             this.PanelA.SuspendLayout();
             this.PanelP.SuspendLayout();
@@ -63,6 +63,7 @@ namespace Proyecto_LFA
             // 
             // StartupPanel
             // 
+            this.StartupPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.StartupPanel.Controls.Add(this.btnStartP);
             this.StartupPanel.Controls.Add(this.SelectAuto);
             this.StartupPanel.Controls.Add(this.txtWord);
@@ -131,13 +132,14 @@ namespace Proyecto_LFA
             // 
             // PanelA
             // 
+            this.PanelA.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PanelA.Controls.Add(this.btnStartA);
             this.PanelA.Controls.Add(this.lblCintaA);
             this.PanelA.Controls.Add(this.label3);
             this.PanelA.Controls.Add(this.btnSwitch);
             this.PanelA.Controls.Add(this.btnReset);
             this.PanelA.Enabled = false;
-            this.PanelA.Location = new System.Drawing.Point(415, 12);
+            this.PanelA.Location = new System.Drawing.Point(12, 241);
             this.PanelA.Name = "PanelA";
             this.PanelA.Size = new System.Drawing.Size(476, 208);
             this.PanelA.TabIndex = 1;
@@ -193,6 +195,7 @@ namespace Proyecto_LFA
             // 
             // PanelP
             // 
+            this.PanelP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PanelP.Controls.Add(this.btnStop);
             this.PanelP.Controls.Add(this.lblTransition);
             this.PanelP.Controls.Add(this.lblCurrentState);
@@ -206,11 +209,22 @@ namespace Proyecto_LFA
             this.PanelP.Controls.Add(this.btnAuto);
             this.PanelP.Controls.Add(this.btnRestart);
             this.PanelP.Enabled = false;
-            this.PanelP.Location = new System.Drawing.Point(415, 241);
+            this.PanelP.Location = new System.Drawing.Point(494, 241);
             this.PanelP.Name = "PanelP";
             this.PanelP.Size = new System.Drawing.Size(476, 208);
             this.PanelP.TabIndex = 9;
             this.PanelP.Visible = false;
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(21, 165);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(94, 29);
+            this.btnStop.TabIndex = 15;
+            this.btnStop.Text = "Detener";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Visible = false;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // lblTransition
             // 
@@ -315,28 +329,18 @@ namespace Proyecto_LFA
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Berlin Sans FB", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(521, 74);
+            this.label4.Location = new System.Drawing.Point(558, 99);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(279, 33);
             this.label4.TabIndex = 1;
             this.label4.Text = "Analizador de Turing";
             // 
-            // btnStop
-            // 
-            this.btnStop.Location = new System.Drawing.Point(21, 165);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(94, 29);
-            this.btnStop.TabIndex = 15;
-            this.btnStop.Text = "Detener";
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Visible = false;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(914, 477);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(979, 477);
             this.Controls.Add(this.PanelP);
             this.Controls.Add(this.PanelA);
             this.Controls.Add(this.label4);
