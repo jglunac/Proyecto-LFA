@@ -59,8 +59,8 @@ namespace Proyecto_LFA
                 }
             }
 
-            try
-            {
+            //try
+            //{
                 string[] MT = RawMT.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
 
@@ -139,11 +139,11 @@ namespace Proyecto_LFA
 
                
                 MessageBox.Show("Máquina generada correctamente.");
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("¡No es una máquina válida!");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    MessageBox.Show("¡No es una máquina válida!");
+            //}
         }
 
         private void SelectAuto_Click(object sender, EventArgs e)
